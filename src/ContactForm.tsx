@@ -15,11 +15,12 @@ type FormData = {
 
 const ContactForm = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedQuery, setSelectedQuery] = useState<string | null>(null);
 
   const schema: ZodType<FormData> = z.object({
     firstname: z.string().nonempty("This field is required"),
     lastname: z.string().nonempty("This field is required"),
-    email: z.string().nonempty("Email is required").email(" Please enter a valid email address"),
+    email: z.string().nonempty("Email is required").email("Please enter a valid email address"),
     message: z.string().nonempty("This field is required"),
     query: z.enum(['GeneralEnquiry', 'SupportRequest'], {
       errorMap: () => ({ message: "Please select a query type" })
@@ -45,12 +46,12 @@ const ContactForm = () => {
     <div>
       {showPopup && (
         <div className="fixed top-0 left-0 right-0 bg-darkgreen text-white p-4 flex flex-col items-center justify-center z-50">
-          <div className="flex flex-col  bg-darkergray p-4 rounded-md">
+          <div className="flex flex-col bg-darkergray p-4 rounded-md">
             <div className="flex items-center">
               <img src={success} alt="Success Icon" className="h-6 w-6 mr-2" />
               <h1 className="text-xl font-bold">Message sent</h1>
             </div>
-            <p className="mt-[10px] text-gray-400 ">Thanks for completing the form, we'll be in touch soon!</p>
+            <p className="mt-[10px] text-gray-400">Thanks for completing the form, we'll be in touch soon!</p>
           </div>
         </div>
       )}
@@ -63,7 +64,7 @@ const ContactForm = () => {
                 <div className="flex flex-col">
                   <label htmlFor="firstname">First Name</label>
                   <input
-                    className="border border-black h-[40px] rounded-[5px] p-1 w-[300px] mt-[10px]"
+                    className="border cursor-pointer border-black h-[40px] rounded-[5px] p-1 w-[300px] mt-[10px] hover:border-2 hover:border-green-500"
                     id="firstname"
                     type="text"
                     {...register('firstname')}
@@ -73,7 +74,7 @@ const ContactForm = () => {
                 <div className="flex flex-col">
                   <label htmlFor="lastname">Last Name</label>
                   <input
-                    className="border border-black h-[40px] rounded-[5px] p-1 w-[300px] mt-[10px]"
+                    className="border cursor-pointer border-black h-[40px] rounded-[5px] p-1 w-[300px] mt-[10px] hover:border-2 hover:border-green-500"
                     id="lastname"
                     type="text"
                     {...register('lastname')}
@@ -86,7 +87,7 @@ const ContactForm = () => {
                 <input 
                   type="email" 
                   id="email" 
-                  className="p-1 border border-black rounded-[5px] w-[600px] mt-[10px] h-[40px]" 
+                  className="p-1 border cursor-pointer border-black rounded-[5px] w-[600px] mt-[10px] h-[40px] hover:border-2 hover:border-green-500" 
                   {...register('email')}
                 />
                 {errors.email && <p className="text-red-600">{errors.email.message}</p>}
@@ -94,23 +95,29 @@ const ContactForm = () => {
               <div className="flex flex-col mt-[20px]">
                 <label>Query Type</label>
                 <div className="flex space-x-4">
-                  <div className="flex items-center border border-black p-2 rounded-md w-[300px] mt-[10px]">
+                  <div 
+                    className={`flex items-center border p-2 rounded-md w-[300px] mt-[10px] ${selectedQuery === 'GeneralEnquiry' ? 'bg-lightgreen' : 'bg-white'} focus-within:border-2 focus-within:border-green-500`}
+                  >
                     <input
                       type="radio"
                       id="generalenquiry"
                       value="GeneralEnquiry"
-                      className="ml-[18px] mr-2"
+                      className="ml-[18px] mr-2 focus:ring-2 focus:ring-green-500"
                       {...register('query')}
+                      onChange={() => setSelectedQuery('GeneralEnquiry')}
                     />
                     <label htmlFor="generalenquiry">General Enquiry</label>
                   </div>
-                  <div className="flex items-center border border-black p-2 rounded-md w-[300px] mt-[10px]">
+                  <div 
+                    className={`flex items-center border p-2 rounded-md w-[300px] mt-[10px] ${selectedQuery === 'SupportRequest' ? 'bg-lightgreen' : 'bg-white'} focus-within:border-2 focus-within:border-green-500`}
+                  >
                     <input
                       type="radio"
                       id="supportrequest"
                       value="SupportRequest"
-                      className="ml-[18px] mr-2"
+                      className="ml-[18px] mr-2 focus:ring-2 focus:ring-green-500"
                       {...register('query')}
+                      onChange={() => setSelectedQuery('SupportRequest')}
                     />
                     <label htmlFor="supportrequest">Support Request</label>
                   </div>
@@ -120,14 +127,14 @@ const ContactForm = () => {
               <div className="flex flex-col mt-[20px]">
                 <label htmlFor="message">Message</label>
                 <textarea
-                  className="p-1 mt-[10px] border border-black rounded-md h-[80px] text-top align-top"
+                  className="p-1 mt-[10px]  border border-black rounded-md h-[80px] text-top align-top focus:border-2 hover:border-green-500"
                   id="message"
                   {...register('message')}
                 />
                 {errors.message && <p className="text-red-600">{errors.message.message}</p>}
               </div>
               <div className="space-x-4 mt-[20px]">
-                <input type="checkbox" id="agree" {...register('agree')} />
+                <input type="checkbox" id="agree" {...register('agree')} className="focus:border-2 hover:border-green-500" />
                 <span>I consent to being contacted by the team</span>
                 {errors.agree && <p className="text-red-600">{errors.agree.message}</p>}
               </div>
