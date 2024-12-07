@@ -61,7 +61,7 @@ const ContactForm = () => {
             <h1 className="text-2xl font-bold font-Karla">Contact Us</h1>  
             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-[20px]">  
               <div className="flex flex-col flex-1">  
-                <label htmlFor="firstname">First Name</label>  
+                <label htmlFor="firstname">First Name<span className=" ml-[10px] text-green-700">*</span></label>  
                 <input  
                   className="border cursor-pointer border-black h-[40px] rounded-[5px] p-1 mt-[10px] hover:border-2 hover:border-green-500"  
                   id="firstname"  
@@ -71,7 +71,7 @@ const ContactForm = () => {
                 {errors.firstname && <p className="text-red-600">{errors.firstname.message}</p>}  
               </div>  
               <div className="flex flex-col flex-1">  
-                <label htmlFor="lastname">Last Name</label>  
+                <label htmlFor="lastname">Last Name<span className=" ml-[10px] text-green-700">*</span></label>  
                 <input  
                   className="border cursor-pointer border-black h-[40px] rounded-[5px] p-1 mt-[10px] hover:border-2 hover:border-green-500"  
                   id="lastname"  
@@ -82,7 +82,7 @@ const ContactForm = () => {
               </div>  
             </div>  
             <div className="flex flex-col mt-[20px]">  
-              <label htmlFor="email">Email</label>  
+              <label htmlFor="email">Email<span className=" ml-[10px] text-green-700">*</span></label>  
               <input  
                 type="email"  
                 id="email"  
@@ -92,7 +92,7 @@ const ContactForm = () => {
               {errors.email && <p className="text-red-600">{errors.email.message}</p>}  
             </div>  
             <div className="flex flex-col mt-[20px]">  
-              <label>Query Type</label>  
+              <label>Query Type<span className=" ml-[10px] text-green-700">*</span></label>  
               <div className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">  
                 <div  
                   className={`flex items-center border p-2 rounded-md w-full md:w-[300px] mt-[10px] ${selectedQuery === 'GeneralEnquiry' ? 'bg-lightgreen' : 'bg-white'} focus-within:border-2 focus-within:border-green-500`}  
@@ -124,7 +124,7 @@ const ContactForm = () => {
               {errors.query && <p className="text-red-600">{errors.query.message}</p>}  
             </div>  
             <div className="flex flex-col mt-[20px]">  
-              <label htmlFor="message">Message</label>  
+              <label htmlFor="message">Message<span className=" ml-[10px] text-green-700">*</span></label>  
               <textarea  
                 className="p-1 mt-[10px] border border-black rounded-md h-[80px] text-top align-top focus:border-2 hover:border-green-500"  
                 id="message"  
@@ -134,7 +134,7 @@ const ContactForm = () => {
             </div>  
             <div className="flex items-center space-x-2 mt-[20px]">  
               <input type="checkbox" id="agree" {...register('agree')} className="focus:border-2 hover:border-green-500" />  
-              <label htmlFor="agree" className="text-sm">I consent to being contacted by the team</label>  
+              <label htmlFor="agree" className="text-sm">I consent to being contacted by the team<span className=" ml-[10px] text-green-700">*</span></label>  
               {errors.agree && <p className="text-red-600">{errors.agree.message}</p>}  
             </div>  
             <button className="mt-[40px] bg-mediumgreen w-full md:w-[600px] items-center h-[50px] rounded-md text-white hover:bg-darkergray">Submit</button>  
